@@ -28,8 +28,6 @@ jobs:
           start: npm run server, npm start
           wait-on: http://localhost:3000
 
-
-
   tag_release:
     if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
     needs: [testing_app]
