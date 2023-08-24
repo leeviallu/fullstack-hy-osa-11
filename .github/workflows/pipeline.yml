@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  testing_project:
+  testing_app:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -30,13 +30,14 @@ jobs:
 
 
 
-  deployment_pipeline:
-    needs: [  testing_project ]
+  tag_release:
+    if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+    needs: [testing_app]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-            node-version: "16"
-      - name: ls
-        run: ls
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
+          DEFAULT_BUMP: patch          
