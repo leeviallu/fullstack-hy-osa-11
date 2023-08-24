@@ -1,4 +1,4 @@
 echo "Start script"
 
 npm run server
-npm run start
+npx serve -s build
