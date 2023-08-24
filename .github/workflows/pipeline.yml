@@ -19,6 +19,8 @@ jobs:
         run: npm run eslint
       - name: Build
         run: npm run build
+      - name: Test backend
+        run: npm run test
       - name: Test frontend
         uses: cypress-io/github-action@v5
         with:
