@@ -1,0 +1,40 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  testing_project:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+            node-version: "16"
+      - name: Npm install
+        run: npm install
+      - name: Lint
+        run: npm run eslint
+      - name: Build frontend
+        run: npm run build
+      - name: Test frontend
+        uses: cypress-io/github-action@v5
+        with:
+          command: npm run test:e2e
+          start: npm run server, npm start
+          wait-on: http://localhost:3000
+
+
+
+  deployment_pipeline:
+    needs: [  testing_project ]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+            node-version: "16"
+      - name: ls
+        run: ls

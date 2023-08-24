@@ -11,7 +11,7 @@ const Notification = () => {
   return (
     <div>
       {
-          notification
+        notification
           ?
           <div style={style}>
             {notification}
