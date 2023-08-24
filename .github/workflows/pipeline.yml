@@ -17,7 +17,7 @@ jobs:
         run: npm install
       - name: Lint
         run: npm run eslint
-      - name: Build frontend
+      - name: Build
         run: npm run build
       - name: Test frontend
         uses: cypress-io/github-action@v5
